@@ -46,14 +46,11 @@ class VarcharField(AbstractField):
             raise TooLargeContent()
 
     def format(self, value):
-        print("format varchar")
         value = super(VarcharField, self).format(value)
 
         if value != 'NULL':
-            print("formatting")
             value = "'{}'".format(value)
 
-        print("***")
         return value
 
 
@@ -72,16 +69,12 @@ class DateTimeField(AbstractField):
             raise NoDateTimeGiven()
 
     def format(self, value):
-        print("format datetime")
-
         if self.nullable and value is None:
             value = "NULL"
 
         if value != 'NULL' and isinstance(value, datetime):
-            print("formatting")
             value = "'{}'".format(value.strftime('%Y-%m-%d %H:%M:%S'))
 
-        print("***")
         return value
 
     def output_format(self, value):
@@ -101,25 +94,16 @@ class IntField(AbstractField):
 
 class TextField(AbstractField):
     def format(self, value):
-        print("format text")
         value = super(TextField, self).format(value)
 
         if value != 'NULL':
-            print("formatting")
             value = "'{}'".format(value)
 
-        print("***")
         return value
 
 
 class BooleanField(AbstractField):
     def validate(self, value):
-        print("validating boolean field")
-        print(type(value))
-        print(value)
-        print(value not in [True, 1, "1"])
-        print(value not in [False, 0, "0"])
-
         if value is None and self.nullable is False:
             raise NotNullFieldError()
 
@@ -127,16 +111,12 @@ class BooleanField(AbstractField):
             raise NoBooleanGiven()
 
     def format(self, value):
-        print("format boolean field")
-
         if self.nullable and value is None:
             value = "NULL"
 
         if value != 'NULL' and isinstance(value, bool):
-            print("formatting")
             return "1" if value is True else "0"
 
-        print("***")
         return value
 
     def output_format(self, value):
@@ -162,16 +142,12 @@ class ListField(AbstractField):
             raise NoListOrTupleGiven()
 
     def format(self, value):
-        print("format list field")
-
         if self.nullable and value is None:
             value = "NULL"
 
         if value != 'NULL' and isinstance(value, (list, tuple,)):
-            print("formatting")
             return "'{}'".format(json.dumps(value))
 
-        print("***")
         return value
 
     def output_format(self, value):

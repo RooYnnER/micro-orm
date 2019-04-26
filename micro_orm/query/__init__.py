@@ -5,7 +5,6 @@ import pymysql
 from datetime import datetime
 
 from .exceptions import *
-from micro_orm.micro_orm import main
 
 
 class QuerySet(object):
@@ -22,6 +21,8 @@ class QuerySet(object):
         self.values = list()
 
     def query(self, get_as_all=False):
+        from ..micro_orm import main
+
         if main is None:
             raise Exception()
 
@@ -70,7 +71,6 @@ class QuerySet(object):
         conn = pymysql.connect(host, user=name, passwd=password, db=db_name, connect_timeout=5, charset=charset)
 
         with conn.cursor(pymysql.cursors.DictCursor) as cur:
-            print(query)
             row_count = cur.execute(query)
 
             if select_word not in query:
@@ -141,7 +141,6 @@ class QueryManager(object):
                 raise NoFilterGiven()
 
             for field in kwargs.keys():
-                print("field", field)
                 is_special = field.find("__") != -1
                 field_name = field
                 special = None
@@ -160,8 +159,6 @@ class QueryManager(object):
                 value = kwargs.get(field)
 
                 if not is_special:
-                    print("field_name", field_name)
-                    print("value", value)
                     filters.append("{} = {}".format(
                         field_name,
                         field_instance.format(value)

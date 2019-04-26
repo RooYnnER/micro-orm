@@ -3,6 +3,6 @@ __pychache__
 .IDEA/
 .vscode/
 .DS_Store
-.build/
-.dist/
-.micro_orm.egg-info/
+build/
+dist/
+micro_orm.egg-info/
