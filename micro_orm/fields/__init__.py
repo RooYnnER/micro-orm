@@ -42,7 +42,7 @@ class VarcharField(AbstractField):
     def validate(self, value):
         super(VarcharField, self).validate(value)
 
-        if len(value) > self.max_length:
+        if value is not None and len(value) > self.max_length:
             raise TooLargeContent()
 
     def format(self, value):

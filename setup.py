@@ -5,7 +5,7 @@ with open('README.md', 'r') as fh:
 
 setuptools.setup(
     name='micro_orm',
-    version='0.0.4',
+    version='0.0.5',
     author='Royner Chavarría',
     author_email='roynercharo@hotmail.com',
     description='A small orm for database uses, based on django ORM',
