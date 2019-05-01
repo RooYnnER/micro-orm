@@ -3,6 +3,7 @@
 import pymysql
 
 from datetime import datetime
+from time import sleep
 
 from .exceptions import *
 
@@ -221,10 +222,11 @@ class QueryManager(object):
             data = list()
 
             for row in self.query_set.query(True):
-                data.append(**{
+                data.append(self.__model_class__(**{
                     field_name: self.__model_class__().__fields__[field_name].format_from_db(row.get(field_name))
                     for field_name in row.keys()
-                })
+                }))
+                sleep(0.007)
 
             self.query_set = None
             return data
